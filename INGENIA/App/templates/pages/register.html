@@ -1,0 +1,21 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <h1>Register for {{ event.name }}</h1>
+    {% if passcode %}
+        <p>Thank you for registering! Your passcode is: <strong>{{ passcode }}</strong></p>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+    {% endif %}
+
+    
+
+    {% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Welcome to the School Events Management System</h1>
+<ul>
+    <li><a href="{% url 'create_event' %}">Create an Event</a></li>
+    <li><a href="{% url 'event_list' %}">View Events</a></li>
+    <li><a href="{% url 'event_list' %}">Register for an Event</a></li>
+    <li><a href="{% url 'check_in' %}">Event Check-In</a></li>
+</ul>
+{% endblock %}
+<!-- {% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Events</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Welcome to the School Events Management System</h1>
+    <ul>
+        <li><a href="{% url 'create_event' %}">Create an Event</a></li>
+        <li><a href="{% url 'event_list' %}">View Events</a></li>
+        <li><a href="{% url 'event_list' %}">Register for an Event</a></li>
+        <li><a href="{% url 'check_in' %}">Event Check-In</a></li>
+    </ul>
+</body>
+</html>
+
+ -->

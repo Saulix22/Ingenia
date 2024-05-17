@@ -1,12 +1,14 @@
 from django.db import models
 import uuid
-
-# Create your models here.
+import secrets
+import string
 
 
 class Event(models.Model):
     EVENT_TYPES = [
-        ('course', 'Course')
+        ('course', 'Course'),
+        ('conference', 'Conference'),
+        ('workshop', 'Workshop'),
     ]
     name = models.CharField(max_length=100)
     event_type = models.CharField(max_length=10, choices=EVENT_TYPES)
@@ -23,11 +25,15 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+    
+def generate_passcode():
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(6))
 
 class Registration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    passcode = models.UUIDField(default=uuid.uuid4, editable=False)
+    passcode = models.CharField(max_length=6, default=generate_passcode, unique=True)
     attended = models.BooleanField(default=False)
 
     def __str__(self):

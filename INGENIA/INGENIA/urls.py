@@ -27,9 +27,10 @@ from App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
     path('events/', views.event_list, name='event_list'),
     path('events/create/', views.create_event, name='create_event'),
     path('events/register/<int:event_id>/', views.register, name='register'),
-    path('events/check-in/<uuid:passcode>/', views.check_in, name='check_in'),
+    path('events/check-in/', views.check_in, name='check_in'),
     path('events/export/<int:event_id>/', views.export_attendees, name='export_attendees'),
 ]

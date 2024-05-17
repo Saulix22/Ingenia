@@ -1,0 +1,19 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Event Check-In</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="passcode">Passcode:</label>
+        <input type="text" id="passcode" name="passcode" required>
+        <button type="submit">Check-In</button>
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+ 
+{% endblock %}
+

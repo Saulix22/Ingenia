@@ -1,0 +1,16 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <h1>Events</h1>
+    <ul>
+        {% for event in events %}
+            <li>{{ event.name }} - <a href="{% url 'register' event.id %}">Register</a></li>
+        {% endfor %}
+    </ul>
+
+    
+    {% endblock %}
