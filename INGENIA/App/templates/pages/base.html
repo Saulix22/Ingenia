@@ -3,21 +3,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}UACJ Events{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>{% block title %}School Events{% endblock %}</title>
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'create_event' %}">Create an Event</a></li>
-            <li><a href="{% url 'event_list' %}">View Events</a></li>
-            <li><a href="{% url 'check_in' %}">Event Check-In</a></li>
-        </ul>
-    </nav>
-    <div class="content">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ml-4">
+        <a class="navbar-brand" href="#">UACJ</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
+            {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'create_event' %}">Crear un evento</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'check_in' %}">Check-In</a></li>
+                {% endif %}
+            {% endif %}
+            
+          </ul>
+        </div>
+      </nav>
+
+    <div class="content p-5">
         {% block content %}
         {% endblock %}
     </div>
 </body>
 </html>
+

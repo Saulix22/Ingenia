@@ -1,0 +1,26 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Add Review{% endblock %}
+
+{% block content %}
+<h1>Add Review for {{ event.name }}</h1>
+
+{% if not authenticated %}
+    <form method="post">
+        {% csrf_token %}
+        {{ passcode_form.as_p }}
+        <button type="submit" name="passcode">Authenticate</button>
+    </form>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+        <input type="hidden" name="registration_id" value="{{ registration.id }}">
+        <button type="submit" name="review">Submit Review</button>
+    </form>
+{% endif %}
+
+{% if registration %}
+    <p>Review for {{ registration.student.name }}</p>
+{% endif %}
+{% endblock %}

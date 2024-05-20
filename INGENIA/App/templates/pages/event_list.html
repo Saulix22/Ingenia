@@ -8,7 +8,12 @@
     <h1>Events</h1>
     <ul>
         {% for event in events %}
-            <li>{{ event.name }} - <a href="{% url 'register' event.id %}">Register</a></li>
+            <li>{{ event.name }} - 
+                <a href="{% url 'register' event.id %}">Register</a>
+                {% if user.is_authenticated and user.is_superuser %}
+                    | <a href="{% url 'export_attended' event.id %}">Export Attended List</a>
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 

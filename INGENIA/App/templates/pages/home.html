@@ -4,31 +4,19 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Welcome to the School Events Management System</h1>
-<ul>
-    <li><a href="{% url 'create_event' %}">Create an Event</a></li>
-    <li><a href="{% url 'event_list' %}">View Events</a></li>
-    <li><a href="{% url 'event_list' %}">Register for an Event</a></li>
-    <li><a href="{% url 'check_in' %}">Event Check-In</a></li>
-</ul>
+
+<h1>Eventos</h1>
+        {% for event in events %}
+
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ event.name }}</h5>
+                      <a href="{% url 'register' event.id %}" class="card-link">Registrarme</a>
+                      {% if user.is_authenticated and user.is_superuser %}
+                      <a href="{% url 'export_attended' event.id %}" class="card-link">Lista de asistencia</a>
+                      {% endif %}
+                    </div>
+                  </div>
+
+        {% endfor %}
 {% endblock %}
-<!-- {% load static %}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>School Events</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <h1>Welcome to the School Events Management System</h1>
-    <ul>
-        <li><a href="{% url 'create_event' %}">Create an Event</a></li>
-        <li><a href="{% url 'event_list' %}">View Events</a></li>
-        <li><a href="{% url 'event_list' %}">Register for an Event</a></li>
-        <li><a href="{% url 'check_in' %}">Event Check-In</a></li>
-    </ul>
-</body>
-</html>
-
- -->

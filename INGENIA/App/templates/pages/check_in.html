@@ -4,16 +4,28 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Event Check-In</h1>
-    <form method="post">
-        {% csrf_token %}
+<h1>Check-In Eventos</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="event">Selecciona evento:</label>
+        <select class="form-control" id="event" name="event" required>
+            <option value="" disabled selected>Selecciona un evento</option>
+            {% for event in events %}
+                <option value="{{ event.id }}" {% if selected_event and selected_event.id == event.id %}selected{% endif %}>{{ event.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
         <label for="passcode">Passcode:</label>
-        <input type="text" id="passcode" name="passcode" required>
-        <button type="submit">Check-In</button>
-    </form>
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
+        <input type="text" class="form-control" id="passcode" name="passcode" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Check-In</button>
+</form>
+{% if message %}
+    <div class="alert alert-info mt-3">{{ message }}</div>
+{% endif %}
  
 {% endblock %}
 
