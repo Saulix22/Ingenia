@@ -16,6 +16,5 @@ urlpatterns = [
     path('events/register/<int:event_id>/', views.register, name='register'),
     path('check-in/', login_required(user_passes_test(admin_required)(views.check_in)), name='check_in'),
     path('export/<int:event_id>/', views.export_attendees, name='export_attended'),
-    path('admin/', admin.site.urls),
     # path('add-review/<int:event_id>/', views.add_review, name='add_review'),
 ]

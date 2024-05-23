@@ -29,6 +29,11 @@ def create_event(request):
 def register(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     passcode = None
+    registrations_count = Registration.objects.filter(event=event).count()
+
+    if registrations_count >= event.max_participants:
+            return render(request, 'pages/register_full.html', {'event': event})
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():

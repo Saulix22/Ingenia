@@ -6,6 +6,8 @@
 {% block content %}
 
     <h1>Registrate para: {{ event.name }}</h1>
+    <h2>Descripción</h2>
+    <p>{{ event.description }}</p>
     {% if passcode %}
         <p>Gracias por tu registro! Tu passcode es: <strong>{{ passcode }}</strong></p>
     {% else %}

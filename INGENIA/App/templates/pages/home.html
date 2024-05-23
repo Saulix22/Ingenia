@@ -5,15 +5,28 @@
 
 {% block content %}
 
-<h1>Eventos</h1>
+<h1 class="mb-4">Eventos</h1>
         {% for event in events %}
 
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 22rem;">
                     <div class="card-body">
-                      <h5 class="card-title">{{ event.name }}</h5>
-                      <a href="{% url 'register' event.id %}" class="card-link">Registrarme</a>
+                      <h4 class="card-title">{{ event.name }}</h4>
+                      <p>{{ event.description }}</p>
+                      
+                      {% if  not user.is_superuser %}
+                      <a href="{% url 'register' event.id %}" class="card-link">
+                        <button type="button" class="btn btn-primary">
+                        Registrarme
+                        </button>
+                      </a>
+                      {% endif %}
+                      
                       {% if user.is_authenticated and user.is_superuser %}
-                      <a href="{% url 'export_attended' event.id %}" class="card-link">Lista de asistencia</a>
+                      <a href="{% url 'export_attended' event.id %}" class="card-link">
+                        <button type="button" class="btn btn-primary">
+                          Lista de participantes
+                        </button>
+                      </a>
                       {% endif %}
                     </div>
                   </div>

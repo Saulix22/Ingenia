@@ -14,6 +14,7 @@ class Event(models.Model):
     event_type = models.CharField(max_length=10, choices=EVENT_TYPES)
     description = models.TextField()
     date = models.DateField()
+    max_participants = models.PositiveIntegerField()
 
     def __str__(self):
         return self.name

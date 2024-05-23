@@ -1,0 +1,19 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Registration Full{% endblock %}
+
+{% block content %}
+<h1>Registration Full for {{ event.name }}</h1>
+<div class="alert alert-warning" role="alert">
+    Lo sentimos, el evento llegó al número máximo de participantes.
+</div>
+<h5>Limite de evento: {{ event.max_participants }} </h5>
+<h4>Descripción</h4>
+<p> {{ event.description }} </p>
+
+<a href="{% url 'home' %}">
+    <button type="button" class="btn btn-primary">
+        Regresar        
+    </button>
+</a>
+{% endblock %}
