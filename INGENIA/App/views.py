@@ -3,16 +3,14 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Event, Student, Registration
-from .forms import EventForm, RegistrationForm
+from .forms import EventForm, RegistrationForm, ReviewForm, PasscodeForm, ToggleReviewsForm
 import csv
 import uuid, secrets, string
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 
-
-
 def home(request):
-    events = Event.objects.all()
+    events = Event.objects.all()    
     return render(request, 'pages/home.html', {'events': events})
 
 @login_required
@@ -96,4 +94,51 @@ def generate_passcode():
         if not Registration.objects.filter(passcode=passcode).exists():
             return passcode
 
+def add_review(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    if not event.reviews_enabled:
+        return render(request, 'pages/reviews_disabled.html', {'event': event})
 
+    registration = None
+    authenticated = False
+    passcode_form = PasscodeForm()
+    review_form = ReviewForm()
+
+    if request.method == 'POST':
+        if 'passcode' in request.POST:
+            passcode_form = PasscodeForm(request.POST)
+            if passcode_form.is_valid():
+                name = passcode_form.cleaned_data['name']
+                passcode = passcode_form.cleaned_data['passcode']
+                try:
+                    registration = Registration.objects.get(student__name=name, passcode=passcode, event=event)
+                    authenticated = True
+                    review_form = ReviewForm(instance=registration)
+                except Registration.DoesNotExist:
+                    passcode_form.add_error(None, 'Invalid name or passcode')
+        elif 'review' in request.POST:
+            registration_id = request.POST.get('registration_id')
+            registration = get_object_or_404(Registration, id=registration_id)
+            authenticated = True
+            review_form = ReviewForm(request.POST, instance=registration)
+            if review_form.is_valid():
+                review_form.save()
+                return redirect('event_list')
+
+    return render(request, 'pages/add_review.html', {
+        'event': event,
+        'passcode_form': passcode_form,
+        'review_form': review_form,
+        'authenticated': authenticated,
+        'registration': registration
+    })
+
+
+def toggle_reviews(request, event_id, action):
+    event = get_object_or_404(Event, id=event_id)
+    if action == 'enable':
+        event.reviews_enabled = True
+    elif action == 'disable':
+        event.reviews_enabled = False
+    event.save()
+    return redirect('home')

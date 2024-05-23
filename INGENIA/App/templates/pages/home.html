@@ -19,15 +19,38 @@
                         Registrarme
                         </button>
                       </a>
+
+                      {% if event.reviews_enabled %}
+                          <a href="{% url 'add_review' event.id %}">
+                            <button type="button" class="btn btn-primary">
+                              Agregar Review
+                              </button>
+                          </a>
                       {% endif %}
                       
+                      {% endif %}
+
                       {% if user.is_authenticated and user.is_superuser %}
                       <a href="{% url 'export_attended' event.id %}" class="card-link">
                         <button type="button" class="btn btn-primary">
                           Lista de participantes
                         </button>
                       </a>
+
+                      <form method="post" action="{% url 'toggle_reviews' event.id 'enable' %}" style="display: inline;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-primary" {% if event.reviews_enabled %} disabled {% endif %}>
+                              Enable Reviews
+                          </button>
+                      </form>
+                      <form method="post" action="{% url 'toggle_reviews' event.id 'disable' %}" style="display: inline;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-primary" {% if not event.reviews_enabled %} disabled {% endif %}>
+                              Disable Reviews
+                          </button>
+                      </form>
                       {% endif %}
+
                     </div>
                   </div>
 

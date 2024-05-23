@@ -15,6 +15,7 @@ class Event(models.Model):
     description = models.TextField()
     date = models.DateField()
     max_participants = models.PositiveIntegerField()
+    reviews_enabled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -36,6 +37,8 @@ class Registration(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     passcode = models.CharField(max_length=6, default=generate_passcode, unique=True)
     attended = models.BooleanField(default=False)
+    review = models.TextField(blank=True, null=True)
+    rating = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.student.name} - {self.event.name}"

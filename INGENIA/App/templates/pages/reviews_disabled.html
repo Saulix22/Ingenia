@@ -1,0 +1,13 @@
+{% extends 'events/base.html' %}
+
+{% block title %}Reviews deshabilitadas{% endblock %}
+
+{% block content %}
+<h1>{{ event.name }}</h1>
+<p>Actualmente las reviews están deshabilitadas para este evento. Una vez terminado el evento podrás realizarla.</p>
+<a href="{% url 'home' %}">
+    <button type="button" class="btn btn-primary">
+        Regresar        
+    </button>
+</a>
+{% endblock %}
